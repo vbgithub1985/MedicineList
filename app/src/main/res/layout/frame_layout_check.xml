@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="10dp">
+    <CheckBox
+        android:id="@+id/cbBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right">
+    </CheckBox>
+    <TextView
+        android:id="@+id/tvPatNameCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_gravity="top|left"
+        android:textSize="15sp">
+    </TextView>
+    <TextView
+        android:id="@+id/tvPatDiagnosCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="5dp">
+    </TextView>
+
+</FrameLayout>
