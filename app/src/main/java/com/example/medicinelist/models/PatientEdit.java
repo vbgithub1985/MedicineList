@@ -3,12 +3,8 @@ package com.example.medicinelist.models;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,26 +14,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SimpleCursorTreeAdapter;
-import android.widget.SimpleExpandableListAdapter;
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import com.example.medicinelist.R;
-//import com.example.medicinelist.entities.Therapy;
-//import com.example.medicinelist.adapters.MySimpleCursorTreeAdapter;
-//import com.example.medicinelist.controller.Controller;
-//import com.example.medicinelist.controller.DBController;
-//import com.example.medicinelist.entities.Patient;
 import com.example.medicinelist.R;
 import com.example.medicinelist.adapters.TherapyAdapter;
 import com.example.medicinelist.entity.Patients;
@@ -50,6 +31,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     private static final int ADD_PROCESS = 1;
     private static final int EDIT_PROCESS = 2;
     Button btnSave, btnAddTher, btnFVDate;
+    ImageButton imgBtnAddTherapy;
     EditText  etName, etDiagnos, etPhone, etEmail, etBirth;
     ExpandableListView elvMain;
     ListView lvTherapyView;
@@ -72,18 +54,8 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_edit);
         initPatientEdit();
-        //setInitialDateTime();
     }
 
-    // отображаем диалоговое окно для выбора даты
-    /*public void setDate(View v) {
-        new DatePickerDialog(PatientEdit.this, dBirth,
-                dateAndTime.get(Calendar.YEAR),
-                dateAndTime.get(Calendar.MONTH),
-                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                .show();
-    }
-*/
     public void setDateFV(View v) {
         new DatePickerDialog(PatientEdit.this, dFV,
                 dateAndTime.get(Calendar.YEAR),
@@ -92,41 +64,19 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
                 .show();
     }
 
-   /* private void setInitialDateTime() {
-
-        etDate.setText(DateUtils.formatDateTime(this,
-                dateAndTime.getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                        | DateUtils.FORMAT_SHOW_TIME));
-    }*/
-
-    /*DatePickerDialog.OnDateSetListener dBirth=new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            myYear = year;
-            myMonth = monthOfYear+1;
-            myDay = dayOfMonth;
-            btnBirth.setText("" + myDay + "/" + myMonth + "/" + myYear);
-            //setInitialDateTime();
-        }
-    };*/
-
     DatePickerDialog.OnDateSetListener dFV=new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            /*dateAndTime.set(Calendar.YEAR, year);
-            dateAndTime.set(Calendar.MONTH, monthOfYear);
-            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);*/
             myYear = year;
             myMonth = monthOfYear+1;
             myDay = dayOfMonth;
             btnFVDate.setText("" + myDay + "." + myMonth + "." + myYear);
-            //setInitialDateTime();
         }
     };
 
 private void initPatientEdit(){
     Log.d(LOG_TAG,"---PatientEdit_initPatientEdit----");
-    btnAddTher = (Button) findViewById(R.id.btnAddTher);
-    btnAddTher.setOnClickListener(this);
+    imgBtnAddTherapy = (ImageButton) findViewById(R.id.imgAddTherapy);
+    imgBtnAddTherapy.setOnClickListener(this);
     etBirth = (EditText) findViewById(R.id.etBirth);
     btnFVDate = (Button) findViewById(R.id.btnFVDate);
     etName = (EditText) findViewById(R.id.etName);
@@ -194,119 +144,12 @@ private void initPatientEdit(){
                 EditTherapy(therapy.getId(), pat_id);
             }
         });
-
-        /*
-
-
-        Map<String, String> map;
-
-        Patients pat = Patients.findById(Patients.class, pat_id);
-        String id = ""+pat_id;
-        // коллекция для групп
-        ArrayList<Map<String, String>> groupDataList = new ArrayList<>();
-       // List<Therapies> groupName = Therapies.listAll(Therapies.class, "");
-        List<Therapies> groupName = pat.getTherapies();//Therapies.find(Therapies.class, "patients = ?", pat.getId().toString(),"","");
-        Log.d(LOG_TAG,"---groupName----" + groupName.toString());
-        for (int i = 0; i < groupName.size(); i++) {
-            map = new HashMap<>();
-            map.put("groupName", groupName.get(i).getDateConsult()); // время года
-            groupDataList.add(map);
-        }
-
-        // список атрибутов групп для чтения
-        String groupFrom[] = new String[] { "groupName" };
-        // список ID view-элементов, в которые будет помещены атрибуты групп
-        int groupTo[] = new int[] { android.R.id.text1 };
-
-        // создаем общую коллекцию для коллекций элементов
-        ArrayList<ArrayList<Map<String, String>>> сhildDataList = new ArrayList<>();
-
-        // в итоге получится сhildDataList = ArrayList<сhildDataItemList>
-
-        // создаем коллекцию элементов для первой группы
-        ArrayList<Map<String, String>> сhildDataItemList = new ArrayList<>();
-        String dateConst = groupName.get(0).getDateConsult();
-        String str = "";//groupName.get(0).getTherapy();
-        for (int i = 0; i < groupName.size(); i++) {
-            if (!dateConst.equals(groupName.get(i).getDateConsult())){
-                сhildDataList.add(сhildDataItemList);
-                сhildDataItemList = new ArrayList<>();
-            }else{
-                str = str + "\n" + groupName.get(i).getTherapy();
-            }
-            map = new HashMap<>();
-            map.put("therapyName", str); // название месяца
-            сhildDataItemList.add(map);
-            dateConst = groupName.get(i).getDateConsult();
-            str = groupName.get(i).getTherapy();
-        }
-        сhildDataList.add(сhildDataItemList);
-        // список атрибутов элементов для чтения
-        String childFrom[] = new String[] { "therapyName" };
-        // список ID view-элементов, в которые будет помещены атрибуты
-        // элементов
-        int childTo[] = new int[] { android.R.id.text1 };
-        SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(
-                this, groupDataList,
-                android.R.layout.simple_expandable_list_item_1, groupFrom,
-                groupTo, сhildDataList, android.R.layout.simple_list_item_1,
-                childFrom, childTo);
-
-        elvMain = (ExpandableListView) findViewById(R.id.elvMain);
-        elvMain.setAdapter(adapter);
-        elvMain.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View view,
-                                        int groupPosition, int childPosition, long id) {
-                    //Therapies therapies = (Therapies)parent.getExpandableListAdapter().getChildId(groupPosition, childPosition);
-                    Long TherId = parent.getExpandableListAdapter().getChildId(groupPosition, childPosition);
-                    //Therapies therapies = Therapies.findById(Therapies.class, TherId);
-                //Cursor cur = (Cursor)parent.getExpandableListAdapter().getChild(groupPosition, childPosition);
-                    Log.d(LOG_TAG,"GetFrom List TherId - " + TherId);
-                    Log.d(LOG_TAG,"GetFrom List groupPosition - " + groupPosition);
-                    Log.d(LOG_TAG,"GetFrom List childPosition- " + childPosition);
-                    Log.d(LOG_TAG,"GetFrom List id - " + id);
-                    //Log.d(LOG_TAG,"GetFrom List - " + therapies.getTherapy() + " - " + therapies.getId());
-                    return false;
-                }
-            });
-        //}
-*/
-        /*Cursor cursor = controller.getAllDatesTherapy(pat_id);
-        startManagingCursor(cursor);
-        String[] groupFrom = { DBController.THERCOLUMN_DATECONSULT };
-        int[] groupTo = { android.R.id.text1 };
-
-        String[] childFrom = { DBController.THERCOLUMN_NAME };
-        int[] childTo = { android.R.id.text1 };
-
-        // создаем адаптер и настраиваем список
-         sctAdapter = new MySimpleCursorTreeAdapter(this, cursor,
-                android.R.layout.simple_expandable_list_item_1, groupFrom,
-                grouSimpleCursorTreeAdapterpTo, android.R.layout.simple_list_item_1, childFrom,
-                childTo);
-        elvMain = (ExpandableListView) findViewById(R.id.elvMain);
-        elvMain.setAdapter(sctAdapter);
-
-        elvMain.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition,   int childPosition, long id) {
-                Cursor cur = (Cursor)parent.getExpandableListAdapter().getChild(groupPosition, childPosition);
-                Log.d(LOG_TAG,cur.getString(0));
-                EditTherapy(getApplicationContext(), Long.parseLong(cur.getString(0)), (long)pat_id);
-                /*Intent intent = new Intent(getApplicationContext(), TherapyEdit.class);
-                intent.putExtra("therapy_Id", Integer.parseInt(cur.getString(0)));
-                intent.putExtra("pat_id", pat_id);
-                startActivity(intent);
-                return false;
-            }
-        });*/
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnAddTher:
+            case R.id.imgAddTherapy:
                 if (pat_id==0)
                     addOrEditPation(ACTION_PROCESS);
                 if (therapy_id!=0)
@@ -324,7 +167,7 @@ private void initPatientEdit(){
         etEmail.setEnabled(flag);
         etBirth.setEnabled(flag);
         btnFVDate.setEnabled(flag);
-        btnAddTher.setEnabled(flag);
+        imgBtnAddTherapy.setEnabled(flag);
     }
 
     private void EditTherapy(long therapy_Id, long pat_Id){

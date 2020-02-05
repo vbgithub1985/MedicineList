@@ -69,18 +69,25 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-       <Button
-            android:id="@+id/btnPhoto"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/take_picture">
-        </Button>
-        <Button
-            android:id="@+id/btnPhotoGallery"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Документы">
+        </TextView>
+        <ImageButton
+            android:id="@+id/imgBtnAddPhotos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/take_picture">
-        </Button>
+            android:src="@drawable/ic_shortcut_add_photo_alternate"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/imgBtnTakePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shortcut_camera_alt"
+            android:background="@null"/>
     </LinearLayout>
 
 

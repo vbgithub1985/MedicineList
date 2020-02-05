@@ -40,6 +40,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -120,20 +121,24 @@ public class TherapyEdit extends AppCompatActivity  implements View.OnClickListe
     final String TAG = "myLogs";
 
     ImageView ivPhoto;
+    ImageButton imgButton, imgTakePhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_therapy_edit);
 
         //controller =  new Controller(this);
-        btnPhoto = (Button) findViewById(R.id.btnPhoto);
-        btnPhoto.setOnClickListener(this);
+        //btnPhoto = (Button) findViewById(R.id.btnPhoto);
+        //btnPhoto.setOnClickListener(this);
 
-        btnPhotoGallery = (Button) findViewById(R.id.btnPhotoGallery);
-        btnPhotoGallery.setOnClickListener(this);
+       // btnPhotoGallery = (Button) findViewById(R.id.btnPhotoGallery);
+        //btnPhotoGallery.setOnClickListener(this);
 
+        imgButton = (ImageButton) findViewById(R.id.imgBtnAddPhotos);
+        imgButton.setOnClickListener(this);
 
-
+        imgTakePhoto = (ImageButton) findViewById(R.id.imgBtnTakePhoto);
+        imgTakePhoto.setOnClickListener(this);
 
         btnFVDate = (Button) findViewById(R.id.btnFVDate);
 
@@ -200,20 +205,23 @@ public class TherapyEdit extends AppCompatActivity  implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnPhoto:
+            //case R.id.btnPhoto:
                 //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 //intent.putExtra(MediaStore.EXTRA_OUTPUT, generateFileUri(TYPE_PHOTO));
                 //startActivityForResult(intent, REQUEST_CODE_PHOTO);
                 //dispatchTakePictureIntent();
-                break;
+               // break;
            //case R.id.ivPhoto:
                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(etAnalis.getText().toString())));
                 //ivPhoto.setImageDrawable(Drawable.createFromPath(etAnalis.getText().toString()));
                // break;
-            case R.id.btnPhotoGallery:
+            //case R.id.btnPhotoGallery:
                 //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 //intent.putExtra(MediaStore.EXTRA_OUTPUT, generateFileUri(TYPE_PHOTO));
                 //startActivityForResult(intent, REQUEST_CODE_PHOTO);
+                //selectPhotoFromGallery();
+                //break;
+            case R.id.imgBtnAddPhotos:
                 selectPhotoFromGallery();
                 break;
         }
