@@ -40,6 +40,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     private static final int ADD_PROCESS = 1;
     private static final int EDIT_PROCESS = 2;
     final int DIALOG_ITEMS = 1;
+    final int DIALOG_SAVE = 2;
     Button btnSave, btnAddTher, btnFVDate;
     ImageButton imgBtnAddTherapy;
     EditText  etName, etDiagnos, etPhone, etEmail, etBirth;
@@ -47,9 +48,10 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     ListView lvTherapyView;
     Calendar dateAndTime=Calendar.getInstance();
     TherapyAdapter therapyAdapter;
+    boolean dialog_Save = false;
     //TextView etDate;
 
-    int DIALOG_DATE = 1;
+
     int myYear = 2011;
     int myMonth = 01;
     int myDay = 01;
@@ -142,10 +144,19 @@ private void initPatientEdit(){
 
     @Override
     protected void onResume() {
-        Log.d(LOG_TAG,"---PatientEdit_onResume----");
+        Log.d(LOG_TAG,"---PatientEdit_onResume----"+flagChangeData);
         super.onResume();
 
        // initTherapy();
+    }
+
+    @Override
+    protected void onStop() {
+        if (flagChangeData)
+            addOrEditPation(ACTION_PROCESS);
+        super.onStop();
+        Log.d(LOG_TAG,"---PatientEdit_onStop----"+flagChangeData);
+
     }
 
     private void initTherapy(){
@@ -166,10 +177,22 @@ private void initPatientEdit(){
     }
     protected Dialog onCreateDialog(int id) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        if (id == DIALOG_ITEMS) {
-            adb.setTitle(R.string.info_del_pat);
-            adb.setMessage(R.string.del_pat);
-            adb.setIcon(android.R.drawable.ic_dialog_info);
+        int info_dialog=0;
+        int quest_dialog=0;
+        if (id > 0) {
+            if (id == DIALOG_ITEMS) {
+                info_dialog = R.string.info_del_pat;
+                quest_dialog = R.string.del_pat;
+                adb.setIcon(android.R.drawable.ic_dialog_alert);
+                dialog_Save = false;
+            } else if (id == DIALOG_SAVE) {
+                info_dialog = R.string.info_save_pat;
+                quest_dialog = R.string.save_pat;
+                adb.setIcon(android.R.drawable.ic_dialog_info);
+                dialog_Save = true;
+            }
+            adb.setTitle(info_dialog);
+            adb.setMessage(quest_dialog);
             adb.setPositiveButton(R.string.yes, myClickListener);
             // кнопка отрицательного ответа
             adb.setNegativeButton(R.string.no, myClickListener);
@@ -182,10 +205,14 @@ private void initPatientEdit(){
     }
     DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
+            Log.d(LOG_TAG,"---myClickListener----"+dialog_Save);
             switch (which) {
                 // положительная кнопка
                 case Dialog.BUTTON_POSITIVE:
-                    deleteObj(pat_id);
+                    if (!dialog_Save)
+                        deleteObj(pat_id);
+                    else
+                        addOrEditPation(ACTION_PROCESS);
                     //finish();
                     break;
                 // негативная кнопка

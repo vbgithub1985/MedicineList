@@ -10,6 +10,10 @@
     <string name="del_pat">Удалить пациента?</string>
     <string name="info_del_cat">Удаление категории</string>
     <string name="info_del_pat">Удаление пациента</string>
+    <string name="save_cat">Сохранить категорию?</string>
+    <string name="save_pat">Сохранить пациента?</string>
+    <string name="info_save_cat">Сохранение категории</string>
+    <string name="info_save_pat">Сохранение пациента</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>
