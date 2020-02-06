@@ -9,86 +9,101 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
+    <RelativeLayout android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="ФИО"/>
+        android:id="@+id/RelLat1">
 
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="(пусто)"
-        android:inputType="textPersonName"
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите ФИО пациента"
+            android:inputType="textPersonName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Диагноз"/>
 
-    <EditText
-        android:id="@+id/etDiagnos"
-        android:layout_width="match_parent"
+    </RelativeLayout>
+    <RelativeLayout android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="(пусто)"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Телефон"/>
+        android:id="@+id/RelLat2">
 
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="(пусто)"
-        android:inputType="phone"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="E-Mail"/>
+        <EditText
+            android:id="@+id/etDiagnos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите диагноз пациента"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+        </RelativeLayout>
 
-    <EditText
-        android:id="@+id/etEmail"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="(пусто)"
-        android:inputType="textEmailAddress"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Возраст"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <EditText
-        android:id="@+id/etBirth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="(пусто)"
-        android:inputType="number"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Дата 1 посещения"></TextView>
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="20"
+            android:hint="+380__ ___-__-__"
+            android:textSize="8pt"/>
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите E-Mail пациента"
+            android:inputType="textEmailAddress"
+            android:textSize="8pt"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnFVDate"
-        android:layout_width="140dp"
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_border"
-        android:onClick="setDateFV"
-        android:text="__.__.____"
-        android:textSize="10pt" />
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Возраст"/>
+
+        <EditText
+            android:id="@+id/etBirth"
+            android:layout_width="43dp"
+            android:layout_height="wrap_content"
+            android:hint=""
+            android:maxLength="3"
+            android:inputType="number"
+            android:gravity="center"
+            android:textSize="8pt"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Дата 1 приема"/>
+        <Button
+            android:id="@+id/btnFVDate"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/button_border"
+            android:onClick="setDateFV"
+            android:text="__.__.____"
+            android:textSize="9pt" />
+    </LinearLayout>
+
+
+
+
 
         <LinearLayout
             android:id="@+id/linearLayout7"

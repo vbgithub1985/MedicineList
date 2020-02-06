@@ -60,6 +60,7 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MyLog", "onCreate_CAteg1=" + cat_id);
         setContentView(R.layout.activity_category_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,11 +73,16 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
         btnAddPatToCat = (Button) findViewById(R.id.btnAddPatToCat);
         btnAddPatToCat.setOnClickListener(this);
         intent = getIntent();
+
         if (!flagNew) {
             cat_id = intent.getExtras().getLong("cat_Id");
-            setEditTextEnabled(true);
+            if (cat_id!=0)
+                setEditTextEnabled(false);
+            else
+                setEditTextEnabled(true);
         }
-        Log.d("MyLog", "onCreate_CAteg=" + cat_id);
+
+        Log.d("MyLog", "onCreate_CAteg2=" + cat_id);
         load_info();
         dbController = new DbController();
 
@@ -139,9 +145,11 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
 
 
     private void load_info() {
-        setEditTextEnabled(false);
+
+        //setEditTextEnabled(false);
         Log.d("MyLog", "load_info=");
         if (cat_id!=0){
+            setEditTextEnabled(false);
             Categories category = Categories.findById(Categories.class, cat_id);
             Log.d("MyLog", "load_info=" + category.getName());
             etCatName.setText(category.getName());
@@ -168,9 +176,9 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
             catId = saveData(cat_id);
             cat_id = catId;
         }
-        Log.d("MyLogAddPatients", "AddPatients = " + catId);
+        Log.d("MyLogAddPatients", "AddPatients = " + cat_id);
         Intent intent = new Intent(this, PatientsForAdd.class);
-        intent.putExtra("cat_id", catId);
+        intent.putExtra("cat_id", cat_id);
         startActivity(intent);
     }
 
@@ -178,8 +186,8 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
     protected Dialog onCreateDialog(int id) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         if (id == DIALOG_ITEMS) {
-                adb.setTitle("Удаление категории");
-                adb.setMessage(R.string.save_data);
+                adb.setTitle(R.string.info_del_cat);
+                adb.setMessage(R.string.del_cat);
                 adb.setIcon(android.R.drawable.ic_dialog_info);
                 adb.setPositiveButton(R.string.yes, myClickListener);
                 // кнопка отрицательного ответа
@@ -234,6 +242,8 @@ public class CategoryEdit extends AppCompatActivity implements View.OnClickListe
     }
 
     private void deleteObj(long cat_id) {
+        if (cat_id==0)
+            return;
         Log.d("MyLog", "deleteObj=" + cat_id);
 
         Categories cat = Categories.findById(Categories.class, cat_id);

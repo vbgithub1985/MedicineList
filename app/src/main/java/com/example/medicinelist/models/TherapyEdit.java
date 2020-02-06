@@ -153,8 +153,6 @@ public class TherapyEdit extends AppCompatActivity  implements View.OnClickListe
         //ivPhoto.setOnClickListener(this);
         tableLayout = (TableLayout) findViewById(R.id.tableLayout);
 
-        //linearLayout6 = (LinearLayout) findViewById(R.id.linearLayout6);
-        //relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         ACTION_PROCESS = ADD_PROCESS;
         if (therapy_Id!=0) {
             ACTION_PROCESS = EDIT_PROCESS;
@@ -166,14 +164,6 @@ public class TherapyEdit extends AppCompatActivity  implements View.OnClickListe
             setEditTextEnabled(false);
         }
         createDirectory();
-        /*try {
-            getOutputImgFromDbs();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

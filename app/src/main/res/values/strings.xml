@@ -6,7 +6,10 @@
     <string name="take_picture">Фото</string>
     <string name="title_activity_category_edit">CategoryEdit</string>
     <string name="exit">Выход</string>
-    <string name="save_data">Удалить категорию?</string>
+    <string name="del_cat">Удалить категорию?</string>
+    <string name="del_pat">Удалить пациента?</string>
+    <string name="info_del_cat">Удаление категории</string>
+    <string name="info_del_pat">Удаление пациента</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>

@@ -2,12 +2,17 @@ package com.example.medicinelist.models;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,11 +21,15 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import com.example.medicinelist.R;
 import com.example.medicinelist.adapters.TherapyAdapter;
+import com.example.medicinelist.entity.Categories;
 import com.example.medicinelist.entity.Patients;
 import com.example.medicinelist.entity.Therapies;
 
@@ -30,6 +39,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     private static final String FIRST_THERAPY = "Начало лечения. Осмотр.";
     private static final int ADD_PROCESS = 1;
     private static final int EDIT_PROCESS = 2;
+    final int DIALOG_ITEMS = 1;
     Button btnSave, btnAddTher, btnFVDate;
     ImageButton imgBtnAddTherapy;
     EditText  etName, etDiagnos, etPhone, etEmail, etBirth;
@@ -48,6 +58,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     long pat_id;
     long therapy_id;
     boolean flagNew = false;
+    boolean flagChangeData = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG_TAG,"---PatientEdit_onCreate----");
@@ -84,6 +95,8 @@ private void initPatientEdit(){
     etPhone = (EditText) findViewById(R.id.etPhone);
     etEmail = (EditText) findViewById(R.id.etEmail);
 
+
+
     //controller = new Controller(this);
     Intent intent = getIntent();
     if (!flagNew)
@@ -109,10 +122,14 @@ private void initPatientEdit(){
 
         if (id == R.id.menu_save) {
             addOrEditPation(ACTION_PROCESS);
-            finish();
+            //finish();
         }
         if (id == R.id.menu_edit) {
             setEditTextEnabled(true);
+        }
+        if (id == R.id.menu_del_obj) {
+            showDialog(DIALOG_ITEMS);
+            //finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -125,7 +142,9 @@ private void initPatientEdit(){
 
     @Override
     protected void onResume() {
+        Log.d(LOG_TAG,"---PatientEdit_onResume----");
         super.onResume();
+
        // initTherapy();
     }
 
@@ -145,7 +164,51 @@ private void initPatientEdit(){
             }
         });
     }
+    protected Dialog onCreateDialog(int id) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        if (id == DIALOG_ITEMS) {
+            adb.setTitle(R.string.info_del_pat);
+            adb.setMessage(R.string.del_pat);
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            adb.setPositiveButton(R.string.yes, myClickListener);
+            // кнопка отрицательного ответа
+            adb.setNegativeButton(R.string.no, myClickListener);
+            // кнопка нейтрального ответа
+            adb.setNeutralButton(R.string.cancel, myClickListener);
+            return adb.create();
+        }
+        return super.onCreateDialog(id);
 
+    }
+    DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                // положительная кнопка
+                case Dialog.BUTTON_POSITIVE:
+                    deleteObj(pat_id);
+                    //finish();
+                    break;
+                // негативная кнопка
+                case Dialog.BUTTON_NEGATIVE:
+                    //finish();
+                    break;
+                // нейтральная кнопка
+                case Dialog.BUTTON_NEUTRAL:
+                    break;
+            }
+        }
+    };
+    private void deleteObj(long obj_id) {
+        if (obj_id==0)
+            return;
+        Log.d("MyLog", "deleteObj=" + obj_id);
+
+        Patients pat = Patients.findById(Patients.class, obj_id);
+        pat.delete();
+        Toast.makeText(getApplicationContext(), "Удалено", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+    // обработчик нажатия на кнопку
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -168,6 +231,7 @@ private void initPatientEdit(){
         etBirth.setEnabled(flag);
         btnFVDate.setEnabled(flag);
         imgBtnAddTherapy.setEnabled(flag);
+        flagChangeData = flag;
     }
 
     private void EditTherapy(long therapy_Id, long pat_Id){
@@ -224,7 +288,8 @@ private void initPatientEdit(){
                 patient.save();
                 break;
         }
-
+        Toast.makeText(getApplicationContext(), "Сохранено успешно!", Toast.LENGTH_SHORT).show();
+        setEditTextEnabled(false);
     }
 
 }

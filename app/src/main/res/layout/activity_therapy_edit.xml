@@ -88,28 +88,21 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_shortcut_camera_alt"
             android:background="@null"/>
+
     </LinearLayout>
 
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_height="wrap_content"
+        <RelativeLayout android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:orientation="horizontal">
-        </TableLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/RelLat1">
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+            </TableLayout>
+        </RelativeLayout>
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/sdcard"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="10dp"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:numColumns="auto_fit"
-            android:columnWidth="90dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            />
     </LinearLayout>
 
 
