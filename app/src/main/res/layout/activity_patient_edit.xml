@@ -59,7 +59,7 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите E-Mail пациента"
+            android:hint="Введите работу пациента"
             android:inputType="textEmailAddress"
             android:textSize="8pt"/>
     </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_width="43dp"
             android:layout_height="wrap_content"
             android:hint=""
-            android:maxLength="3"
+            android:maxLength="4"
             android:inputType="number"
             android:gravity="center"
             android:textSize="8pt"/>
