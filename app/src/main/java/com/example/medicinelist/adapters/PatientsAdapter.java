@@ -12,8 +12,12 @@ import android.widget.TextView;
 import com.example.medicinelist.R;
 import com.example.medicinelist.controllers.MainController;
 import com.example.medicinelist.entity.Patients;
+import com.example.medicinelist.support.DateStringFormat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PatientsAdapter extends BaseAdapter {
     private Context context;
@@ -40,18 +44,22 @@ public class PatientsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View view, ViewGroup viewGroup)  {
         if (view == null){
             view = View.inflate(context, R.layout.frame_layout, null);
         }
-        TextView pat_title = view.findViewById(R.id.tvName);
-        TextView pat_diag = view.findViewById(R.id.tvDiagnos);
-        TextView pat_fdate = view.findViewById(R.id.tvFVDate);
         Patients patient = patients.get(i);
-        pat_diag.setText(patient.getDiagnosis());
-        pat_fdate.setText(patient.getDateFirstConsult().replace("/","."));
-        pat_title.setText(patient.getName() + "\n");
-
+        try {
+            TextView pat_title = view.findViewById(R.id.tvName);
+            TextView pat_diag = view.findViewById(R.id.tvDiagnos);
+            TextView pat_fdate = view.findViewById(R.id.tvFVDate);
+            DateStringFormat dateStringFormat = new DateStringFormat(patient.getDateFirstConsult().replace("/","."), "dd.mm.yyyy");
+            pat_diag.setText(patient.getDiagnosis());
+            pat_fdate.setText(dateStringFormat.getDateOutput());
+            pat_title.setText(patient.getName() + "\n"+"\n");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return view;
     }
 

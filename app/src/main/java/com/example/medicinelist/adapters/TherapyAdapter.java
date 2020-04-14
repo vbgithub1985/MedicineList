@@ -13,7 +13,9 @@ import com.example.medicinelist.R;
 import com.example.medicinelist.controllers.MainController;
 import com.example.medicinelist.entity.Patients;
 import com.example.medicinelist.entity.Therapies;
+import com.example.medicinelist.support.DateStringFormat;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +55,14 @@ public class TherapyAdapter extends BaseAdapter {
         int len = therapy.getTherapy().length()>33 ? 33 : therapy.getTherapy().length();
         Log.d("MyLog","getView - "+ len);
         Log.d("MyLog","therapy.getTherapy().length - "+ therapy.getTherapy().length());
+        DateStringFormat dateStringFormat = new DateStringFormat(therapy.getDateConsult().replace("/","."), "dd.mm.yyyy");
         String str_title = "\n"+therapy.getTherapy();
-        String str_date = therapy.getTherapy().length()>len ? therapy.getDateConsult().replace("/",".")+ "\n\n":therapy.getDateConsult().replace("/",".")+ "\n";
+        String str_date = null;
+        try {
+            str_date = therapy.getTherapy().length()>len ? dateStringFormat.getDateOutput()+ "\n\n":dateStringFormat.getDateOutput()+ "\n";
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ther_date.setText(str_date);
         ther_title.setText(str_title);
         return view;

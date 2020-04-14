@@ -47,7 +47,8 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.example.medicinelist" />
 
-        <activity android:name=".models.PatientEdit" />
+        <activity android:name=".models.PatientEdit"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".models.TherapyEdit" />
         <activity
             android:name=".MainActivity"

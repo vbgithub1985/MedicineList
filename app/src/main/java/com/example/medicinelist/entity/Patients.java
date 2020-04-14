@@ -81,7 +81,8 @@ public class Patients extends SugarRecord {
     }
 
     public List<Therapies> getTherapies() {
-        return Therapies.findWithQuery(Therapies.class, "select * from Therapies where patients = ? order by replace(Date_consult,'/','') desc", getId().toString());
+        //return Therapies.findWithQuery(Therapies.class, "select * from Therapies where patients = ? order by replace(Date_consult,'/','') desc", getId().toString());
+        return Therapies.findWithQuery(Therapies.class, "select * from Therapies where patients = ? order by id desc", getId().toString());
     }
 
     public Categories getCategory() {

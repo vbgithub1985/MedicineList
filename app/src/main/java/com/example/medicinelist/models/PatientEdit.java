@@ -8,6 +8,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -24,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +35,7 @@ import com.example.medicinelist.adapters.TherapyAdapter;
 import com.example.medicinelist.entity.Categories;
 import com.example.medicinelist.entity.Patients;
 import com.example.medicinelist.entity.Therapies;
+import com.example.medicinelist.support.DateStringFormat;
 
 public class PatientEdit extends AppCompatActivity implements View.OnClickListener{
     final String LOG_TAG = "myLogs";
@@ -66,7 +70,11 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
         Log.d(LOG_TAG,"---PatientEdit_onCreate----");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_edit);
-        initPatientEdit();
+        try {
+            initPatientEdit();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setDateFV(View v) {
@@ -82,11 +90,17 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
             myYear = year;
             myMonth = monthOfYear+1;
             myDay = dayOfMonth;
-            btnFVDate.setText("" + myDay + "." + myMonth + "." + myYear);
+            String dateString = "" + myDay + "." + myMonth + "." + myYear;
+            DateStringFormat dateStringFormat = new DateStringFormat(dateString, "dd.mm.yyyy");
+            try {
+                btnFVDate.setText(dateStringFormat.getDateOutput());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-private void initPatientEdit(){
+private void initPatientEdit() throws ParseException {
     Log.d(LOG_TAG,"---PatientEdit_initPatientEdit----");
     imgBtnAddTherapy = (ImageButton) findViewById(R.id.imgAddTherapy);
     imgBtnAddTherapy.setOnClickListener(this);
@@ -97,6 +111,24 @@ private void initPatientEdit(){
     etPhone = (EditText) findViewById(R.id.etPhone);
     etEmail = (EditText) findViewById(R.id.etEmail);
 
+    etPhone.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                s.toString().replace("_","");
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    });
 
 
     //controller = new Controller(this);
@@ -139,7 +171,11 @@ private void initPatientEdit(){
     protected void onStart() {
         Log.d(LOG_TAG,"---PatientEdit_Start----");
         super.onStart();
-        initPatientEdit();
+        try {
+            initPatientEdit();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -267,7 +303,7 @@ private void initPatientEdit(){
         intent.putExtra("pat_id", pat_Id);
         startActivity(intent);
     }
-    private void onLoadInfo(long pat_id){
+    private void onLoadInfo(long pat_id) throws ParseException {
         Log.d(LOG_TAG,"-------Edit PAtient------------");
         Patients pat = Patients.findById(Patients.class, pat_id);
         //Patient pat = controller.getPatient(pat_id);
@@ -277,9 +313,14 @@ private void initPatientEdit(){
         etPhone.setText(pat.getPhone());
         etEmail.setText(pat.getEmail());
         etBirth.setText(""+pat.getAge());
-        btnFVDate.setText(pat.getDateFirstConsult().replace("/","."));
+        DateStringFormat dateStringFormat = new DateStringFormat(pat.getDateFirstConsult().replace("/","."), "dd.mm.yyyy");
+        btnFVDate.setText(dateStringFormat.getDateOutput());
     }
+    private String getPhoneFormat(String phone){
+        StringBuilder phoneResult = new StringBuilder();
 
+        return phoneResult.toString();
+    }
     private void addOrEditPation(int flag){
         String FIO, diagnos, phone, email, dateB, FVDate;
         Patients patient;
