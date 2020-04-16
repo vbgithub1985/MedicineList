@@ -36,6 +36,7 @@ import com.example.medicinelist.entity.Categories;
 import com.example.medicinelist.entity.Patients;
 import com.example.medicinelist.entity.Therapies;
 import com.example.medicinelist.support.DateStringFormat;
+import com.example.medicinelist.support.TextWatcherP;
 
 public class PatientEdit extends AppCompatActivity implements View.OnClickListener{
     final String LOG_TAG = "myLogs";
@@ -110,25 +111,9 @@ private void initPatientEdit() throws ParseException {
     etDiagnos = (EditText) findViewById(R.id.etDiagnos);
     etPhone = (EditText) findViewById(R.id.etPhone);
     etEmail = (EditText) findViewById(R.id.etEmail);
-
-    etPhone.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (s.toString().length() > 0) {
-                s.toString().replace("_","");
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    });
+    EditText et = (EditText)findViewById(R.id.etPhone);
+    TextWatcherP inputTextWatcher= new TextWatcherP(et);
+    et.addTextChangedListener(inputTextWatcher);
 
 
     //controller = new Controller(this);

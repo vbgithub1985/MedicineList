@@ -60,9 +60,9 @@
             android:id="@+id/etPhone"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:text="+380__ ___-__-__"
+            android:hint="+3(80__)_______"
             android:inputType="phone"
-            android:maxLength="20"
+            android:maxLength="30"
             android:textColor="#000000"
             android:textSize="8pt" />
     </LinearLayout>
