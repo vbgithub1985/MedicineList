@@ -1,7 +1,9 @@
 package com.example.medicinelist.models;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -66,6 +68,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
     long therapy_id;
     boolean flagNew = false;
     boolean flagChangeData = false;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LOG_TAG,"---PatientEdit_onCreate----");
@@ -101,6 +104,7 @@ public class PatientEdit extends AppCompatActivity implements View.OnClickListen
         }
     };
 
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 private void initPatientEdit() throws ParseException {
     Log.d(LOG_TAG,"---PatientEdit_initPatientEdit----");
     imgBtnAddTherapy = (ImageButton) findViewById(R.id.imgAddTherapy);
@@ -152,6 +156,7 @@ private void initPatientEdit() throws ParseException {
         }
         return super.onOptionsItemSelected(item);
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onStart() {
         Log.d(LOG_TAG,"---PatientEdit_Start----");

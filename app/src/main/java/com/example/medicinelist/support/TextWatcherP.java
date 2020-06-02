@@ -1,10 +1,13 @@
 package com.example.medicinelist.support;
 
+import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class TextWatcherP implements TextWatcher {
     public EditText mEditText;
@@ -56,6 +59,8 @@ public class TextWatcherP implements TextWatcher {
            mEditText.setSelection(mEditText.getText().toString().length());
            mEditText.addTextChangedListener(this);
         }
+
+        //mEditText.setText(PhoneNumberUtils.formatNumber(s.toString()));
 
         /*if (s.length()==10 && (!s.toString().contains("+38"))){
             editText.setText("+38"+s.toString());
